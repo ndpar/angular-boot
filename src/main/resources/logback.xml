@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration debug="true">
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{ISO8601} [%thread] %-5level %logger{35} - %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.classic.AsyncAppender">
+        <appender class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <append>true</append>
+            <file>target/logs/pets.log</file>
+            <encoder>
+                <pattern>%d{ISO8601} [%t] %-5p %c - %m%n</pattern>
+            </encoder>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>target/logs/pets.log-%d{yyyy-MM-dd}.gz</fileNamePattern>
+                <cleanHistoryOnStart>true</cleanHistoryOnStart>
+                <maxHistory>35</maxHistory>
+            </rollingPolicy>
+        </appender>
+        <queueSize>1024</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+    <logger name="com.ndpar.petstore" level="DEBUG"/>
+
+</configuration>
+
+
