@@ -4,6 +4,7 @@ import com.ndpar.petstore.domain.Pet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -36,12 +37,17 @@ public class PetDao {
 
     public Pet getPetById(Long id) {
         log.debug("Get by Id: {}", id);
-        return jdbcTemplate.queryForObject("select * from pets where id=?", mapper, id);
+        try {
+            return jdbcTemplate.queryForObject("select * from pets where id=?", mapper, id);
+        } catch (DataAccessException e) {
+            log.trace(e.getMessage(), e);
+            return null;
+        }
     }
 
-    public void update(Pet pet) {
+    public int update(Pet pet) {
         log.debug("Update: {}", pet);
-        jdbcTemplate.update("update pets set name=? where id=?", pet.getName(), pet.getId());
+        return jdbcTemplate.update("update pets set name=? where id=?", pet.getName(), pet.getId());
     }
 
     public int delete(Long id) {

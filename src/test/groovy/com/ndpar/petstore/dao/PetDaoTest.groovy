@@ -34,19 +34,40 @@ class PetDaoTest {
     }
 
     @Test
+    void getAllPets_empty() {
+        jdbcTemplate.update('delete from pets')
+        assert dao.getAllPets().empty
+    }
+
+    @Test
     void getPetById() {
         assert dao.getPetById(11) == new Pet(id: 11, name: 'Mr. Nice')
     }
 
     @Test
+    void getPetById_not_exist() {
+        assert dao.getPetById(1) == null
+    }
+
+    @Test
     void update() {
-        dao.update(new Pet(id: 11, name: 'Ladybug'))
+        assert dao.update(new Pet(id: 11, name: 'Ladybug')) == 1
         assert jdbcTemplate.queryForMap('select name from pets where id=?', 11).name == 'Ladybug'
     }
 
     @Test
+    void update_not_exist() {
+        assert dao.update(new Pet(id: 1, name: 'Ladybug')) == 0
+    }
+
+    @Test
     void delete() {
-        dao.delete(11)
+        assert dao.delete(11) == 1
         assert jdbcTemplate.queryForList('select * from pets where id=?', 11).isEmpty()
+    }
+
+    @Test
+    void delete_not_exist() {
+        assert dao.delete(1) == 0
     }
 }
