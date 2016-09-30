@@ -8,8 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * API: http://petstore.swagger.io/#/pet
+ */
 @RestController
 @RequestMapping("/app")
 public class PetController {
@@ -20,37 +24,44 @@ public class PetController {
     private PetDao dao;
 
     @ResponseBody
-    @RequestMapping("/pets")
+    @GetMapping("/pets")
     List<Pet> getPets() {
         log.info("Get all pets");
         return dao.getAllPets();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(path = "/pet", method = RequestMethod.POST)
-    public void create(@RequestBody Pet pet) {
+    @PostMapping("/pet")
+    void create(@RequestBody Pet pet) {
         log.info("Create: {}", pet);
         dao.create(pet);
     }
 
     @ResponseBody
-    @RequestMapping(path = "/pet/{petId}")
-    Pet getPetById(@PathVariable Long petId) {
+    @GetMapping("/pet/{petId}")
+    Pet getPetById(@PathVariable Long petId, HttpServletResponse response) {
         log.info("Get by Id: {}", petId);
-        return dao.getPetById(petId);
+        Pet pet = dao.getPetById(petId);
+        log.trace("Pet: {}", pet);
+        if (pet == null) {
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+        }
+        return pet;
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/pet", method = RequestMethod.PUT)
-    public void update(@RequestBody Pet pet) {
+    @PutMapping("/pet")
+    void update(@RequestBody Pet pet, HttpServletResponse response) {
         log.info("Update: {}", pet);
-        dao.update(pet);
+        if (dao.update(pet) != 1) {
+            response.setStatus(HttpStatus.NOT_FOUND.value());
+        }
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/pet/{petId}", method = RequestMethod.DELETE)
-    void delete(@PathVariable Long petId) {
+    @DeleteMapping("/pet/{petId}")
+    void delete(@PathVariable Long petId, HttpServletResponse response) {
         log.info("Delete: {}", petId);
-        dao.delete(petId);
+        if (dao.delete(petId) != 1) {
+            response.setStatus(HttpStatus.NOT_FOUND.value());
+        }
     }
 }
