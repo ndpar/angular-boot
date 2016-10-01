@@ -40,6 +40,16 @@ class PetDaoTest {
     }
 
     @Test
+    void getPetsByName() {
+        assert dao.getPetsByName('ma') == [
+                new Pet(id: 15, name: 'Magneta'),
+                new Pet(id: 16, name: 'RubberMan'),
+                new Pet(id: 17, name: 'Dynama'),
+                new Pet(id: 19, name: 'Magma')
+        ]
+    }
+
+    @Test
     void getPetById() {
         assert dao.getPetById(11) == new Pet(id: 11, name: 'Mr. Nice')
     }

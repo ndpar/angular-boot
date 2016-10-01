@@ -40,6 +40,18 @@ class PetControllerTest {
     }
 
     @Test
+    void get_pet_param_200() {
+        given(dao.getPetsByName('e')).willReturn([
+                new Pet(id: 1, name: 'Premier'),
+                new Pet(id: 2, name: 'Seconde')
+        ])
+
+        mvc.perform(get('/app/pet/?name=e').accept(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string('[{"id":1,"name":"Premier"},{"id":2,"name":"Seconde"}]'))
+    }
+
+    @Test
     void post_pet_201() {
         mvc.perform(post('/app/pet').contentType(APPLICATION_JSON).content('{"name":"Test"}'))
                 .andExpect(status().isCreated())

@@ -23,11 +23,10 @@ public class PetController {
     @Autowired
     private PetDao dao;
 
-    @ResponseBody
     @GetMapping("/pet")
-    List<Pet> getPets() {
-        log.info("Get all pets");
-        return dao.getAllPets();
+    List<Pet> getPets(@RequestParam(name = "name", required = false) String name) {
+        log.info("Get pets. Name: {}", name);
+        return name != null ? dao.getPetsByName(name) : dao.getAllPets();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -37,7 +36,6 @@ public class PetController {
         dao.create(pet);
     }
 
-    @ResponseBody
     @GetMapping("/pet/{petId}")
     Pet getPetById(@PathVariable Long petId, HttpServletResponse response) {
         log.info("Get by Id: {}", petId);

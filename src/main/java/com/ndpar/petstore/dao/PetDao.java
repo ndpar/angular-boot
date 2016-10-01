@@ -35,6 +35,11 @@ public class PetDao {
         return jdbcTemplate.query("select * from pets", mapper);
     }
 
+    public List<Pet> getPetsByName(String name) {
+        log.debug("Get by name: {}", name);
+        return jdbcTemplate.query("select * from pets where UPPER(name) like UPPER(?)", mapper, "%" + name + "%");
+    }
+
     public Pet getPetById(Long id) {
         log.debug("Get by Id: {}", id);
         try {
