@@ -31,9 +31,9 @@ public class PetController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/pet")
-    void create(@RequestBody Pet pet) {
+    Pet create(@RequestBody Pet pet) {
         log.info("Create: {}", pet);
-        dao.create(pet);
+        return dao.create(pet);
     }
 
     @GetMapping("/pet/{petId}")

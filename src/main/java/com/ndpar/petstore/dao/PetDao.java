@@ -8,6 +8,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,15 +20,21 @@ public class PetDao {
     private RowMapper<Pet> mapper = new BeanPropertyRowMapper<>(Pet.class);
 
     private final JdbcTemplate jdbcTemplate;
+    private final SimpleJdbcInsert insert;
 
     @Autowired
     public PetDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        this.insert = new SimpleJdbcInsert(jdbcTemplate)
+                .withTableName("pets")
+                .usingGeneratedKeyColumns("id");
     }
 
-    public void create(Pet pet) {
+    public Pet create(Pet pet) {
         log.debug("Create: {}", pet);
-        jdbcTemplate.update("insert into pets (name) values (?)", pet.getName());
+        Long id = (Long) insert.executeAndReturnKey(pet.toMap());
+        log.trace("New id: {}", id);
+        return getPetById(id);
     }
 
     public List<Pet> getAllPets() {

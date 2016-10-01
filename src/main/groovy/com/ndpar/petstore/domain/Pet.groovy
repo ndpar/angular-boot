@@ -8,4 +8,8 @@ import groovy.transform.ToString
 class Pet {
     Long id
     String name
+
+    Map<String, ?> toMap() {
+        [id: id, name: name]
+    }
 }

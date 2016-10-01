@@ -23,9 +23,7 @@ class PetDaoTest {
 
     @Test
     void create() {
-        dao.create(new Pet(name: 'Test'))
-        long id = jdbcTemplate.queryForObject('select id from pets where name=?', Long.class, 'Test')
-        assert id > 0
+        assert dao.create(new Pet(name: 'Test')) == new Pet(id: 21, name: 'Test')
     }
 
     @Test

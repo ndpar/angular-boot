@@ -57,9 +57,11 @@ class PetControllerTest {
 
     @Test
     void post_pet_201() {
+        given(dao.create(new Pet(name: 'Test'))).willReturn(new Pet(id: 1, name: 'Test'))
+
         mvc.perform(post(path('/pet')).contentType(APPLICATION_JSON).content('{"name":"Test"}'))
                 .andExpect(status().isCreated())
-        verify(dao, times(1)).create(new Pet(name: 'Test'))
+                .andExpect(content().string('{"id":1,"name":"Test"}'))
     }
 
     @Test
