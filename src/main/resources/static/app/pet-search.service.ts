@@ -7,7 +7,7 @@ import { Pet }           from './pet';
 @Injectable()
 export class PetSearchService {
 
-  private baseUrl = 'app/pet';
+  private baseUrl = 'api/pet';
 
   constructor(private http: Http) {}
 

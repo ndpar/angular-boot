@@ -8,7 +8,7 @@ import { Pet } from './pet';
 @Injectable()
 export class PetService {
 
-  private baseUrl = 'app/pet';  // URL to web api
+  private baseUrl = 'api/pet';  // URL to web api
   private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http: Http) { }

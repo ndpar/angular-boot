@@ -15,7 +15,7 @@ import java.util.List;
  * API: http://petstore.swagger.io/#/pet
  */
 @RestController
-@RequestMapping("/app")
+@RequestMapping("/api")
 public class PetController {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
