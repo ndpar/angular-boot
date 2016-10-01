@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.petService.getPets()
-      .then(pets => this.pets = pets.slice(1, 5));
+      .then(pets => this.pets = pets.slice(0, 4));
   }
 
   gotoDetail(pet: Pet): void {
