@@ -15,14 +15,14 @@ export class PetService {
     return this.http
       .post(this.baseUrl, JSON.stringify({name: name}), {headers: this.headers})
       .toPromise()
-      .then(res => res.json().data)
+      .then(res => res.json() as Pet)
       .catch(this.handleError);
   }
 
   getPets(): Promise<Pet[]> {
     return this.http.get(this.baseUrl)
                .toPromise()
-               .then(response => response.json().data as Pet[])
+               .then(response => response.json() as Pet[])
                .catch(this.handleError);
   }
 
@@ -32,9 +32,8 @@ export class PetService {
   }
 
   update(pet: Pet): Promise<Pet> {
-    const url = `${this.baseUrl}/${pet.id}`;
     return this.http
-      .put(url, JSON.stringify(pet), {headers: this.headers})
+      .put(this.baseUrl, JSON.stringify(pet), {headers: this.headers})
       .toPromise()
       .then(() => pet)
       .catch(this.handleError);

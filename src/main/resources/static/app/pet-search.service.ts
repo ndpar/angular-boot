@@ -14,6 +14,6 @@ export class PetSearchService {
   search(term: string): Observable<Pet[]> {
     return this.http
                .get(`${this.baseUrl}/?name=${term}`)
-               .map((r: Response) => r.json().data as Pet[]);
+               .map((r: Response) => r.json() as Pet[]);
   }
 }
