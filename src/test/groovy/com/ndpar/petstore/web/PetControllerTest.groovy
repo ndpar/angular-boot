@@ -28,13 +28,13 @@ class PetControllerTest {
     PetDao dao
 
     @Test
-    void get_pets_200() {
+    void get_pet_200() {
         given(dao.getAllPets()).willReturn([
                 new Pet(id: 1, name: 'Premier'),
                 new Pet(id: 2, name: 'Seconde')
         ])
 
-        mvc.perform(get('/app/pets').accept(APPLICATION_JSON))
+        mvc.perform(get('/app/pet').accept(APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string('[{"id":1,"name":"Premier"},{"id":2,"name":"Seconde"}]'))
     }

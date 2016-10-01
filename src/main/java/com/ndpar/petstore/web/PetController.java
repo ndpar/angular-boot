@@ -24,7 +24,7 @@ public class PetController {
     private PetDao dao;
 
     @ResponseBody
-    @GetMapping("/pets")
+    @GetMapping("/pet")
     List<Pet> getPets() {
         log.info("Get all pets");
         return dao.getAllPets();
