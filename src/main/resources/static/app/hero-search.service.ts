@@ -7,7 +7,7 @@ import { Hero }           from './hero';
 @Injectable()
 export class HeroSearchService {
 
-  private baseUrl = 'app/heroes';
+  private baseUrl = 'app/pet';
 
   constructor(private http: Http) {}
 
