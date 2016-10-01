@@ -2,8 +2,8 @@ import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { DashboardComponent }   from './dashboard.component';
-import { HeroDetailComponent }  from './hero-detail.component';
-import { HeroesComponent }      from './heroes.component';
+import { PetDetailComponent }  from './pet-detail.component';
+import { PetsComponent }      from './pets.component';
 
 const appRoutes: Routes = [
   {
@@ -17,11 +17,11 @@ const appRoutes: Routes = [
   },
   {
     path: 'detail/:id',
-    component: HeroDetailComponent
+    component: PetDetailComponent
   },
   {
-    path: 'heroes',
-    component: HeroesComponent
+    path: 'pets',
+    component: PetsComponent
   }
 ];
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

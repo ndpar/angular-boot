@@ -1,9 +1,9 @@
-<h3>Top Heroes</h3>
+<h3>Top Pets</h3>
 <div class="grid grid-pad">
-  <div *ngFor="let hero of heroes" (click)="gotoDetail(hero)" class="col-1-4">
-    <div class="module hero">
-      <h4>{{hero.name}}</h4>
+  <div *ngFor="let pet of pets" (click)="gotoDetail(pet)" class="col-1-4">
+    <div class="module pet">
+      <h4>{{pet.name}}</h4>
     </div>
   </div>
 </div>
-<hero-search></hero-search>
+<pet-search></pet-search>

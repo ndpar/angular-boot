@@ -11,10 +11,10 @@ import { InMemoryDataService }  from './in-memory-data.service';
 
 import { AppComponent }        from './app.component';
 import { DashboardComponent }  from './dashboard.component';
-import { HeroDetailComponent } from './hero-detail.component';
-import { HeroSearchComponent } from './hero-search.component';
-import { HeroesComponent }     from './heroes.component';
-import { HeroService }         from './hero.service';
+import { PetDetailComponent } from './pet-detail.component';
+import { PetSearchComponent } from './pet-search.component';
+import { PetsComponent }     from './pets.component';
+import { PetService }         from './pet.service';
 
 import { routing } from './app.routing';
 
@@ -29,11 +29,11 @@ import { routing } from './app.routing';
   declarations: [
     AppComponent,
     DashboardComponent,
-    HeroDetailComponent,
-    HeroSearchComponent,
-    HeroesComponent
+    PetDetailComponent,
+    PetSearchComponent,
+    PetsComponent
   ],
-  providers: [ HeroService ],
+  providers: [ PetService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

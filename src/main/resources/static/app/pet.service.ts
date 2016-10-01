@@ -3,17 +3,17 @@ import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Hero } from './hero';
+import { Pet } from './pet';
 
 @Injectable()
-export class HeroService {
+export class PetService {
 
   private baseUrl = 'app/pet';  // URL to web api
   private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http: Http) { }
 
-  create(name: string): Promise<Hero> {
+  create(name: string): Promise<Pet> {
     return this.http
       .post(this.baseUrl, JSON.stringify({name: name}), {headers: this.headers})
       .toPromise()
@@ -21,10 +21,10 @@ export class HeroService {
       .catch(this.handleError);
   }
 
-  getHeroes(): Promise<Hero[]> {
+  getPets(): Promise<Pet[]> {
     return this.http.get(this.baseUrl)
                .toPromise()
-               .then(response => response.json().data as Hero[])
+               .then(response => response.json().data as Pet[])
                .catch(this.handleError);
   }
 
@@ -33,17 +33,17 @@ export class HeroService {
     return Promise.reject(error.message || error);
   }
 
-  update(hero: Hero): Promise<Hero> {
-    const url = `${this.baseUrl}/${hero.id}`;
+  update(pet: Pet): Promise<Pet> {
+    const url = `${this.baseUrl}/${pet.id}`;
     return this.http
-      .put(url, JSON.stringify(hero), {headers: this.headers})
+      .put(url, JSON.stringify(pet), {headers: this.headers})
       .toPromise()
-      .then(() => hero)
+      .then(() => pet)
       .catch(this.handleError);
   }
 
-  getHero(id: number): Promise<Hero> {
-    return this.getHeroes().then(heroes => heroes.find(hero => hero.id === id));
+  getPet(id: number): Promise<Pet> {
+    return this.getPets().then(pets => pets.find(pet => pet.id === id));
   }
 
   delete(id: number): Promise<void> {
