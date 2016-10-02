@@ -40,7 +40,10 @@ export class PetService {
   }
 
   getPet(id: number): Promise<Pet> {
-    return this.getPets().then(pets => pets.find(pet => pet.id === id));
+    return this.http.get(`${this.baseUrl}/${id}`)
+               .toPromise()
+               .then(response => response.json() as Pet)
+               .catch(this.handleError);
   }
 
   delete(id: number): Promise<void> {
