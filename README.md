@@ -35,4 +35,4 @@ To create and populate file based HSQLDB
     curl -v -X PUT -d '{"id":21,"name":"Roger 2"}' -H "content-type:application/json" http://localhost:8080/api/pet
     curl -v -X DELETE  http://localhost:8080/api/pet/21
 
-
+You can explore the API using Swagger UI [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
