@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
+ * http://localhost:8080/swagger-ui.html
+ *
  * API: http://petstore.swagger.io/#/pet
  */
 @RestController
@@ -26,7 +28,7 @@ public class PetController {
     @Autowired
     private PetDao dao;
 
-    @ApiOperation(value = "getPets", nickname = "getPets")
+    @ApiOperation(value = "Find all pets (by name)", nickname = "getPets", produces = "application/json")
     @ApiImplicitParams({
             @ApiImplicitParam(
                     name = "name", value = "Pet's name (substring)",
@@ -38,7 +40,7 @@ public class PetController {
         return name != null ? dao.getPetsByName(name) : dao.getAllPets();
     }
 
-    @ApiOperation(value = "createPet", nickname = "createPet")
+    @ApiOperation(value = "Add a new pet to the store", nickname = "createPet")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/pet")
     Pet create(@RequestBody Pet pet) {
@@ -46,7 +48,7 @@ public class PetController {
         return dao.create(pet);
     }
 
-    @ApiOperation(value = "getPetById", nickname = "getPetById")
+    @ApiOperation(value = "Find pet by ID", nickname = "getPetById", produces = "application/json")
     @ApiImplicitParams({
             @ApiImplicitParam(
                     name = "petId", value = "Pet's id",
@@ -63,7 +65,7 @@ public class PetController {
         return pet;
     }
 
-    @ApiOperation(value = "updatePet", nickname = "updatePet")
+    @ApiOperation(value = "Update pet in the store", nickname = "updatePet")
     @PutMapping("/pet")
     void update(@RequestBody Pet pet, HttpServletResponse response) {
         log.info("Update: {}", pet);
@@ -72,7 +74,7 @@ public class PetController {
         }
     }
 
-    @ApiOperation(value = "deletePet", nickname = "deletePet")
+    @ApiOperation(value = "Delete a pet", nickname = "deletePet")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "petId", value = "Pet's id", dataType = "long", paramType = "path")
     })
