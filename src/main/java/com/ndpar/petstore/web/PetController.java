@@ -20,6 +20,7 @@ import java.util.List;
  * API: http://petstore.swagger.io/#/pet
  */
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api")
 public class PetController {
 
