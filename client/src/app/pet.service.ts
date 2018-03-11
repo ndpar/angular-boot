@@ -2,11 +2,12 @@ import { Injectable }    from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
 import { Pet } from './pet';
+import { environment }   from '../environments/environment';
 
 @Injectable()
 export class PetService {
 
-  private baseUrl = 'api/pet';  // URL to web api
+  private baseUrl = environment.api_url + '/api/pet';  // URL to web api
   private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http: Http) { }

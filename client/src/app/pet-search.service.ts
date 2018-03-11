@@ -3,11 +3,12 @@ import { Http, Response } from '@angular/http';
 import { Observable }     from 'rxjs';
 
 import { Pet }           from './pet';
+import { environment }   from '../environments/environment';
 
 @Injectable()
 export class PetSearchService {
 
-  private baseUrl = 'api/pet';
+  private baseUrl = environment.api_url + '/api/pet';
 
   constructor(private http: Http) {}
 

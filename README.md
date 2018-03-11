@@ -1,13 +1,13 @@
 # Full-stack application
 
-- AngularJS 2 frontend
-- Spring Boot backend
+- Angular client
+- Spring Boot server
 - File based HSQLDB
 
 ## Prerequisites
 
 - `mvn` 3.x.x or higher
-- `npm` 3.x.x or higher
+- `npm` 5.x.x or higher
 
 ## Database
 
