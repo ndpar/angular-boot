@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -33,7 +34,7 @@ public class Application {
         return new ApiInfoBuilder()
                 .title("Spring REST Petstore")
                 .description("This is a sample Petstore server.")
-                .contact("Andrey Paramonov")
+                .contact(new Contact("Andrey Paramonov", "https://github.com/ndpar/angular-boot", "angular@ndpar.com"))
                 .license("Apache License Version 2.0")
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
                 .version("2.0")

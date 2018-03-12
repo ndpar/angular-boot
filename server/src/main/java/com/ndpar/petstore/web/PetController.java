@@ -2,9 +2,7 @@ package com.ndpar.petstore.web;
 
 import com.ndpar.petstore.dao.PetDao;
 import com.ndpar.petstore.domain.Pet;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +28,9 @@ public class PetController {
     private PetDao dao;
 
     @ApiOperation(value = "Find all pets (by name)", nickname = "getPets", produces = "application/json")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Return a list of pets", response = Pet.class, responseContainer = "List")
+    })
     @ApiImplicitParams({
             @ApiImplicitParam(
                     name = "name", value = "Pet's name (substring)",
