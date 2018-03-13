@@ -1,0 +1,72 @@
+:toc:
+
+=== POST Pet
+
+==== Request
+
+include::{snippets}/post-pet/request-fields.adoc[]
+
+Example request
+
+include::{snippets}/post-pet/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/post-pet/response-fields.adoc[]
+
+Example response
+
+include::{snippets}/post-pet/http-response.adoc[]
+
+
+=== GET Pets
+
+==== Request
+
+include::{snippets}/get-pet/request-parameters.adoc[]
+
+Example request
+
+include::{snippets}/get-pet/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/get-pet/response-fields.adoc[]
+
+Example response
+
+include::{snippets}/get-pet/http-response.adoc[]
+
+
+=== PUT Pet
+
+==== Request
+
+include::{snippets}/put-pet/request-fields.adoc[]
+
+Example request
+
+include::{snippets}/put-pet/http-request.adoc[]
+
+==== Response
+
+Example response
+
+include::{snippets}/put-pet/http-response.adoc[]
+
+
+=== DELETE Pet
+
+==== Request
+
+include::{snippets}/delete-pet/path-parameters.adoc[]
+
+Example request
+
+include::{snippets}/delete-pet/http-request.adoc[]
+
+==== Response
+
+Example response
+
+include::{snippets}/delete-pet/http-response.adoc[]
