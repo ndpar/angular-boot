@@ -2,7 +2,8 @@
 
 ## Development server
 
-Run `mvn spring-boot:run` for a dev server. Navigate to Swagger UI [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html).
+Run `mvn spring-boot:run -Dspring.profiles.active=memory` for a dev server.
+Navigate to Swagger UI [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html).
 
 ## Running unit tests
 

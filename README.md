@@ -14,4 +14,4 @@
 To create and populate file-based HSQLDB
 
     cd server
-    mvn clean spring-boot:run -Dspring.datasource.initialize=true
+    mvn spring-boot:run -Dspring.profiles.active=dbinit

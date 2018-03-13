@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    initialize: false
+    platform: hsqldb
+    url: jdbc:hsqldb:file:../db/data
+    username: sa
+
+---
+
+spring:
+  profiles: dbinit
+  datasource:
+    initialize: true
+
+---
+
+spring:
+  profiles: memory
+  datasource:
+    initialize: true
+    url: jdbc:hsqldb:mem:data

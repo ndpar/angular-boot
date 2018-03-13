@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    initialize: true
+    platform: hsqldb
+    url: jdbc:hsqldb:mem:data
+    username: sa
