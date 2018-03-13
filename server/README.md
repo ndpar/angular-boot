@@ -8,6 +8,10 @@ Run `mvn spring-boot:run` for a dev server. Navigate to Swagger UI [http://local
 
 Run `mvn clean test` to execute the JUnit tests.
 
+## API Reference
+
+Run `open target/generated-docs/api-reference.html` to read API Reference documentation.
+
 ## Deployment
 
 Build the Client first. Then run

@@ -11,9 +11,7 @@
 
 ## Database
 
-To create and populate file based HSQLDB
+To create and populate file-based HSQLDB
 
-    cp src/test/resources/*.sql src/main/resources/
-    mkdir db
-    mvn clean spring-boot:run
-    rm src/main/resources/*.sql
+    cd server
+    mvn clean spring-boot:run -Dspring.datasource.initialize=true
