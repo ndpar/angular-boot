@@ -1,9 +1,9 @@
-import { ModuleWithProviders }  from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {ModuleWithProviders} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 
-import { DashboardComponent }   from './dashboard.component';
-import { PetDetailComponent }  from './pet-detail.component';
-import { PetsComponent }      from './pets.component';
+import {DashboardComponent} from './dashboard.component';
+import {PetDetailComponent} from './pet-detail.component';
+import {PetsComponent} from './pets.component';
 
 const appRoutes: Routes = [
   {

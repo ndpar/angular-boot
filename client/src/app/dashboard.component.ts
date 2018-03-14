@@ -1,22 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { Pet } from './pet';
-import { PetService } from './pet.service';
+import {Pet} from './pet';
+import {PetService} from './pet.service';
 
 @Component({
-  moduleId: module.id,
-  selector: 'my-dashboard',
+  selector: 'app-dashboard',
   templateUrl: 'dashboard.component.html',
-  styleUrls: [ 'dashboard.component.css' ]
+  styleUrls: ['dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
 
   pets: Pet[] = [];
 
-  constructor(
-    private router: Router,
-    private petService: PetService) {
+  constructor(private router: Router,
+              private petService: PetService) {
   }
 
   ngOnInit(): void {
@@ -25,7 +23,7 @@ export class DashboardComponent implements OnInit {
   }
 
   gotoDetail(pet: Pet): void {
-    let link = ['/detail', pet.id];
+    const link = ['/detail', pet.id];
     this.router.navigate(link);
   }
 }

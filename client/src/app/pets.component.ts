@@ -1,22 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { Pet } from './pet';
-import { PetService } from './pet.service';
+import {Pet} from './pet';
+import {PetService} from './pet.service';
 
 @Component({
-  moduleId: module.id,
-  selector: 'my-pets',
+  selector: 'app-pets',
   templateUrl: 'pets.component.html',
-  styleUrls: [ 'pets.component.css' ]
+  styleUrls: ['pets.component.css']
 })
 export class PetsComponent implements OnInit {
+
   pets: Pet[];
   selectedPet: Pet;
 
-  constructor(
-    private router: Router,
-    private petService: PetService) {
+  constructor(private router: Router,
+              private petService: PetService) {
   }
 
   ngOnInit(): void {
@@ -24,7 +23,7 @@ export class PetsComponent implements OnInit {
   }
 
   getPets(): void {
-    this.petService.getPets().then(pets => this.pets = pets)
+    this.petService.getPets().then(pets => this.pets = pets);
   }
 
   onSelect(pet: Pet): void {
@@ -38,7 +37,7 @@ export class PetsComponent implements OnInit {
   add(name: string): void {
     name = name.trim();
     if (!name) { return; }
-    this.petService.create(name)
+    this.petService.create({name} as Pet)
       .then(pet => {
         this.pets.push(pet);
         this.selectedPet = null;
@@ -47,10 +46,10 @@ export class PetsComponent implements OnInit {
 
   delete(pet: Pet): void {
     this.petService
-        .delete(pet.id)
-        .then(() => {
-          this.pets = this.pets.filter(h => h !== pet);
-          if (this.selectedPet === pet) { this.selectedPet = null; }
-        });
+      .delete(pet.id)
+      .then(() => {
+        this.pets = this.pets.filter(h => h !== pet);
+        if (this.selectedPet === pet) { this.selectedPet = null; }
+      });
   }
 }

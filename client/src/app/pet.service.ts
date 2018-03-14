@@ -1,57 +1,63 @@
-import { Injectable }    from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import {Injectable} from '@angular/core';
+import {HttpHeaders, HttpClient} from '@angular/common/http';
 
-import { Pet } from './pet';
-import { environment }   from '../environments/environment';
+import {Pet} from './pet';
+import {environment} from '../environments/environment';
+
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
+};
 
 @Injectable()
 export class PetService {
 
-  private baseUrl = environment.api_url + '/api/pet';  // URL to web api
-  private headers = new Headers({'Content-Type': 'application/json'});
+  private baseUrl = environment.api_url + '/api/pet';  // URL to web API
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) {
+  }
 
-  create(name: string): Promise<Pet> {
+  create(pet: Pet): Promise<Pet> {
     return this.http
-      .post(this.baseUrl, JSON.stringify({name: name}), {headers: this.headers})
+      .post(this.baseUrl, pet, httpOptions)
       .toPromise()
-      .then(res => res.json() as Pet)
+      .then(response => response as Pet)
       .catch(this.handleError);
   }
 
   getPets(): Promise<Pet[]> {
-    return this.http.get(this.baseUrl)
-               .toPromise()
-               .then(response => response.json() as Pet[])
-               .catch(this.handleError);
-  }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
-    return Promise.reject(error.message || error);
+    return this.http
+      .get(this.baseUrl)
+      .toPromise()
+      .then(response => response as Pet[])
+      .catch(this.handleError);
   }
 
   update(pet: Pet): Promise<Pet> {
     return this.http
-      .put(this.baseUrl, JSON.stringify(pet), {headers: this.headers})
+      .put(this.baseUrl, pet, httpOptions)
       .toPromise()
       .then(() => pet)
       .catch(this.handleError);
   }
 
   getPet(id: number): Promise<Pet> {
-    return this.http.get(`${this.baseUrl}/${id}`)
-               .toPromise()
-               .then(response => response.json() as Pet)
-               .catch(this.handleError);
+    return this.http
+      .get(`${this.baseUrl}/${id}`)
+      .toPromise()
+      .then(response => response as Pet)
+      .catch(this.handleError);
   }
 
   delete(id: number): Promise<void> {
-    const url = `${this.baseUrl}/${id}`;
-    return this.http.delete(url, {headers: this.headers})
+    return this.http
+      .delete(`${this.baseUrl}/${id}`, httpOptions)
       .toPromise()
       .then(() => null)
       .catch(this.handleError);
+  }
+
+  private handleError(error: any): Promise<any> {
+    console.error('An error occurred', error); // for demo purposes only
+    return Promise.reject(error.message || error);
   }
 }
