@@ -13,6 +13,8 @@ import {PetsComponent} from './pets.component';
 import {PetService} from './pet.service';
 
 import {routing} from './app.routing';
+import {MessageService} from './message.service';
+import {MessagesComponent} from './messages/messages.component';
 
 @NgModule({
   imports: [
@@ -24,11 +26,12 @@ import {routing} from './app.routing';
   declarations: [
     AppComponent,
     DashboardComponent,
+    MessagesComponent,
     PetDetailComponent,
     PetSearchComponent,
     PetsComponent
   ],
-  providers: [HttpClientModule, PetService],
+  providers: [HttpClientModule, MessageService, PetService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
