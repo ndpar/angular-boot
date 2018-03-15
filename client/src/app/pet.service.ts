@@ -1,6 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpHeaders, HttpClient} from '@angular/common/http';
 
+import {Observable} from 'rxjs/Observable';
+import {of} from 'rxjs/observable/of';
+import {catchError, tap} from 'rxjs/operators';
+
+import {MessageService} from './message.service';
 import {Pet} from './pet';
 import {environment} from '../environments/environment';
 
@@ -13,51 +18,65 @@ export class PetService {
 
   private baseUrl = environment.api_url + '/api/pet';  // URL to web API
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private messageService: MessageService) {
   }
 
-  create(pet: Pet): Promise<Pet> {
-    return this.http
-      .post(this.baseUrl, pet, httpOptions)
-      .toPromise()
-      .then(response => response as Pet)
-      .catch(this.handleError);
+  create(pet: Pet): Observable<Pet> {
+    return this.http.post<Pet>(this.baseUrl, pet, httpOptions).pipe(
+      tap((p: Pet) => this.log(`Created pet w/ id=${p.id}`)),
+      catchError(this.handleError<Pet>('create'))
+    );
   }
 
-  getPets(): Promise<Pet[]> {
-    return this.http
-      .get(this.baseUrl)
-      .toPromise()
-      .then(response => response as Pet[])
-      .catch(this.handleError);
+  getPets(): Observable<Pet[]> {
+    return this.http.get<Pet[]>(this.baseUrl).pipe(
+      tap(_ => this.log(`Fetched pets`)),
+      catchError(this.handleError('getPets', []))
+    );
   }
 
-  update(pet: Pet): Promise<Pet> {
-    return this.http
-      .put(this.baseUrl, pet, httpOptions)
-      .toPromise()
-      .then(() => pet)
-      .catch(this.handleError);
+  update(pet: Pet): Observable<Pet> {
+    return this.http.put<Pet>(this.baseUrl, pet, httpOptions).pipe(
+      tap(_ => this.log(`Updated pet id=${pet.id}`)),
+      catchError(this.handleError<any>('update'))
+    );
   }
 
-  getPet(id: number): Promise<Pet> {
-    return this.http
-      .get(`${this.baseUrl}/${id}`)
-      .toPromise()
-      .then(response => response as Pet)
-      .catch(this.handleError);
+  getPet(id: number): Observable<Pet> {
+    return this.http.get<Pet>(`${this.baseUrl}/${id}`).pipe(
+      tap(_ => this.log(`Fetched pet id=${id}`)),
+      catchError(this.handleError<Pet>(`getPet id=${id}`))
+    );
   }
 
-  delete(id: number): Promise<void> {
-    return this.http
-      .delete(`${this.baseUrl}/${id}`, httpOptions)
-      .toPromise()
-      .then(() => null)
-      .catch(this.handleError);
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`, httpOptions).pipe(
+      tap(_ => this.log(`Deleted pet id=${id}`)),
+      catchError(this.handleError<any>('delete'))
+    );
   }
 
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
-    return Promise.reject(error.message || error);
+  /**
+   * Handle Http operation that failed.
+   * Let the app continue.
+   * @param operation - name of the operation that failed
+   * @param result - optional value to return as the observable result
+   */
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      this.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+  }
+
+  private log(message: string) {
+    this.messageService.add('PetService: ' + message);
   }
 }

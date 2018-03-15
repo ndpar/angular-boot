@@ -25,7 +25,7 @@ export class PetDetailComponent implements OnInit {
 
   getHero(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.petService.getPet(id).then(pet => this.pet = pet);
+    this.petService.getPet(id).subscribe(pet => this.pet = pet);
   }
 
   goBack(): void {
@@ -33,6 +33,6 @@ export class PetDetailComponent implements OnInit {
   }
 
   save(): void {
-    this.petService.update(this.pet).then(() => this.goBack());
+    this.petService.update(this.pet).subscribe(() => this.goBack());
   }
 }

@@ -23,7 +23,8 @@ export class PetsComponent implements OnInit {
   }
 
   getPets(): void {
-    this.petService.getPets().then(pets => this.pets = pets);
+    this.petService.getPets()
+      .subscribe(pets => this.pets = pets);
   }
 
   onSelect(pet: Pet): void {
@@ -38,17 +39,16 @@ export class PetsComponent implements OnInit {
     name = name.trim();
     if (!name) { return; }
     this.petService.create({name} as Pet)
-      .then(pet => {
+      .subscribe(pet => {
         this.pets.push(pet);
         this.selectedPet = null;
       });
   }
 
   delete(pet: Pet): void {
-    this.petService
-      .delete(pet.id)
-      .then(() => {
-        this.pets = this.pets.filter(h => h !== pet);
+    this.petService.delete(pet.id)
+      .subscribe(() => {
+        this.pets = this.pets.filter(p => p !== pet);
         if (this.selectedPet === pet) { this.selectedPet = null; }
       });
   }
