@@ -7,9 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -20,6 +22,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api")
+@Validated
 public class PetController {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
@@ -36,6 +39,7 @@ public class PetController {
                     name = "name", value = "Pet's name (substring)",
                     dataType = "string", paramType = "query", defaultValue = "n")
     })
+    @Valid
     @GetMapping("/pet")
     List<Pet> getPets(@RequestParam(name = "name", required = false) String name) {
         log.info("Get pets. Name: {}", name);
@@ -43,6 +47,7 @@ public class PetController {
     }
 
     @ApiOperation(value = "Add a new pet to the store", nickname = "createPet")
+    @Valid
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/pet")
     Pet create(@RequestBody Pet pet) {
@@ -56,6 +61,7 @@ public class PetController {
                     name = "petId", value = "Pet's id",
                     dataType = "long", paramType = "path", defaultValue = "11")
     })
+    @Valid
     @GetMapping("/pet/{petId}")
     Pet getPetById(@PathVariable Long petId, HttpServletResponse response) {
         log.info("Get by Id: {}", petId);
@@ -69,7 +75,7 @@ public class PetController {
 
     @ApiOperation(value = "Update pet in the store", nickname = "updatePet")
     @PutMapping("/pet")
-    void update(@RequestBody Pet pet, HttpServletResponse response) {
+    void update(@Valid @RequestBody Pet pet, HttpServletResponse response) {
         log.info("Update: {}", pet);
         if (dao.update(pet) != 1) {
             response.setStatus(HttpStatus.NOT_FOUND.value());

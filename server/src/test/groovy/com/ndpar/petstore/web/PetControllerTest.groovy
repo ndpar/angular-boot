@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
+import org.springframework.web.util.NestedServletException
 
 import static org.mockito.BDDMockito.given
 import static org.mockito.Mockito.*
@@ -188,5 +189,33 @@ class PetControllerTest {
     void delete_pet_1_404() {
         given(dao.delete(1)).willReturn(0)
         mvc.perform(delete(path('/pet/1'))).andExpect(status().isNotFound())
+    }
+
+    // ------------------------------------------------------------------------
+    // Validation Tests
+    // ------------------------------------------------------------------------
+
+    @Test(expected = NestedServletException.class)
+    void get_pet_null_id() {
+        given(dao.getAllPets()).willReturn([new Pet(name: 'Premier')])
+        mvc.perform(get(path('/pet')).accept(APPLICATION_JSON))
+    }
+
+    @Test(expected = NestedServletException.class)
+    void get_pet_param_null_id() {
+        given(dao.getPetsByName('e')).willReturn([new Pet(name: 'Premier')])
+        mvc.perform(get(path('/pet/?name=e')).accept(APPLICATION_JSON))
+    }
+
+    @Test(expected = NestedServletException.class)
+    void get_pet_1_null_id() {
+        given(dao.getPetById(1)).willReturn(new Pet(name: 'Test'))
+        mvc.perform(get(path('/pet/{id}'), 1).accept(APPLICATION_JSON))
+    }
+
+    @Test
+    void put_pet_null_id() {
+        mvc.perform(put(path('/pet')).contentType(APPLICATION_JSON).content('{"name":"Test"}'))
+                .andExpect(status().isBadRequest())
     }
 }
